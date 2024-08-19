@@ -5,3 +5,4 @@ django-cors-headers
 pydantic[email]
 rav
 python-decouple
+gunicorn
