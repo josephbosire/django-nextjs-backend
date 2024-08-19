@@ -85,7 +85,15 @@ APPEND_SLASH=True
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default':{
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME', cast=str,),
+        'USER':  config('DB_USER', cast=str, default="postgres"),
+        'PASSWORD': config('DB_PASSWORD', cast=str,  default="postgres"),
+        'HOST': config('DB_HOST', cast=str, default="localhost"),
+        'PORT': config('DB_PORT', cast=str, default="5432"),
+    },
+    'sqlites': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
