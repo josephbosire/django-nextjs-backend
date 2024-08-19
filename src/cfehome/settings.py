@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w7omxz=w055-zdi-1)j1&ao1xsnqbkc!9wxad=3eit^q+qib^_'
+SECRET_KEY = config('DJANGO_SECRET_KEY', cast=str)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DJANGO_DEBUG', cast=bool, default=False)
 
 ALLOWED_HOSTS = []
 
@@ -58,11 +59,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'cfehome.urls'
 
 CORS_URLS_REGEX = r"^/api/.*$"
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000'
-]
+ENV_CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=str, default="")
+CORS_ALLOWED_ORIGINS =[origin.lower().strip() for origin in ENV_CORS_ALLOWED_ORIGINS.split(",")]
 
 TEMPLATES = [
     {
@@ -82,7 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cfehome.wsgi.application'
 
-
+APPEND_SLASH=True
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

@@ -2,6 +2,7 @@ from ninja import NinjaAPI, Schema
 from ninja_extra import NinjaExtraAPI
 from ninja_jwt.authentication import JWTAuth
 from ninja_jwt.controller import NinjaJWTDefaultController
+import helpers
 
 api = NinjaExtraAPI()
 api.register_controllers(NinjaJWTDefaultController)
@@ -18,7 +19,7 @@ def hello(request):
     print(request)
     return {"message": "hello world"}
 
-@api.get("/me", response=UserSchema, auth=JWTAuth())
+@api.get("/me", response=UserSchema, auth=helpers.api_auth_user_required)
 def me(request):
     return request.user
 

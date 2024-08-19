@@ -4,3 +4,4 @@ django-ninja-jwt[crypto]
 django-cors-headers
 pydantic[email]
 rav
+python-decouple
