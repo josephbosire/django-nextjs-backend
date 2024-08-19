@@ -29,7 +29,7 @@ DEBUG = config('DJANGO_DEBUG', cast=bool, default=False)
 
 ALLOWED_HOSTS = [".railway.app"]
 
-
+CSRF_TRUSTED_ORIGINS= ['https://*.railway.app', 'http://*.railway.app']
 # Application definition
 
 INSTALLED_APPS = [
