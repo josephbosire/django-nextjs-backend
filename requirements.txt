@@ -6,3 +6,5 @@ pydantic[email]
 rav
 python-decouple
 gunicorn
+dj-database-url
+psycopg[binary]

@@ -84,21 +84,25 @@ APPEND_SLASH=True
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+DATABASE_URL = config("DATABASE_URL", cast=str, default=None)
+
 DATABASES = {
-    'default':{
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', cast=str,),
-        'USER':  config('DB_USER', cast=str, default="postgres"),
-        'PASSWORD': config('DB_PASSWORD', cast=str,  default="postgres"),
-        'HOST': config('DB_HOST', cast=str, default="localhost"),
-        'PORT': config('DB_PORT', cast=str, default="5432"),
-    },
-    'sqlites': {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
+if DATABASE_URL is not None:
+    import dj_database_url
+    print("DATABASE URL", DATABASE_URL)
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=300,
+            conn_health_checks=True
+        )
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
